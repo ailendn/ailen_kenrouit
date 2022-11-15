@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="module" src="./eth_page.ts"></script>
+        <link rel="stylesheet"/>
+    </head>
+    <body>
+        <h1>Ethereum: pricing information</h1>
+        <form>
+            <label for="coin">Select type of price</label>
+            <select id="prices" onchange="selectType();">
+                <option value="-1">Select option</option>
+                <option value="1">Current price</option>
+                <option value="2">Historical prices</option>
+            </select>
+            <input type="submit" value="Send" />
+        </form>
+    </body>
+</html>
