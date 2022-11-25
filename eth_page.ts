@@ -1,17 +1,9 @@
 import { getPrice } from "./coingecko"
-function selectType(){
-    let type = document.getElementById (`prices`);
-    let selectedType = prices.value;
-}
-document.getElementById("Send")!.onclick = async function () {
-    const tokenNameElem: HTMLInputElement = document.getElementById("token_name") as HTMLInputElement
-    const tokenName: string = tokenNameElem.value
-    alert(await getPrice(tokenName))
-}
-document.querySelector("coin")?.addEventListener("change", async function (event: Event) {
+
+document.getElementById("prices")!.addEventListener("change", async function (event: Event) {
     // event.preventDefault()
 
-    let elem: HTMLSelectElement = document.getElementById("coin") as HTMLSelectElement
+    let elem: HTMLSelectElement = document.getElementById("prices") as HTMLSelectElement
     let value: string = elem.options[elem.selectedIndex].value
     let text: string = elem.options[elem.selectedIndex].text
     console.log(`Value ${value} with text ${text}`)
@@ -27,21 +19,28 @@ document.querySelector("coin")?.addEventListener("change", async function (event
             valueElement.innerHTML = ethPrice.toString()
             break
         case "2":
-            // Lógica para traer datos de base de datos
-            // let prices = readFileSync("prices.json")
             let prices = [
-                { name: "eth", date: "Wed Oct 05 2022 18:43:14", price:"USD 1349.34" },
-                { name: "eth", date: "Wed Oct 05 2022 18:46:27", price:"USD 1349.83" },
-                { name: "eth", date: "Wed Nov 02 2022 17:05:00", price:"USD 1535.02" },
+                { coinId: "eth", date: "Wed Oct 05 2022 18:43:14", price:"USD 1349.34" },
+                { coinId: "eth", date: "Wed Oct 05 2022 18:46:27", price:"USD 1349.83" },
+                { coinId: "eth", date: "Wed Nov 02 2022 17:05:00", price:"USD 1535.02" },
                 ]
-            let displayPrices = []
-            for (let i = 0; i < prices.length; i++) {
-                // delete (prices[i]["name"])
-                displayPrices.push({ date: prices[i].date, price: prices[i].price })
-            }
-            valueElement.innerHTML = JSON.stringify(displayPrices)
+           
+            valueElement.innerHTML = arrayToTable(prices)
             break
         default:
             throw new Error(`There is no option ${value}`)
     }
 })
+function arrayToTable (data: any []) : string {
+    const columnNames: string [] = Object.keys (data[0])
+    let table : string = "<table>"
+    table += "<thead>"
+    table += "<tr>"
+    table += columnNames.reduce((acc, columnName) => `${acc}<th>${columnName}</th>`, "")
+    table += "</tr>"
+    table += "</thead>"
+    table += "<tbody>"
+    table += "</tbody>"
+    table += "</table>"
+    return table
+}
